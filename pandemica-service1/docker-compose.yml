@@ -1,0 +1,30 @@
+version: "3.9"
+services:
+  db:
+    image: postgres:12
+    container_name: "test_db"
+    ports:
+      - "5432:5432"
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+    networks:
+      - my-network
+
+  service1:
+    container_name: "service1"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - "db"
+    ports:
+      - "8080:8080"
+    restart: always
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    external: true

@@ -1,4 +1,4 @@
-package com.csci927.pandemicaservice1;
+package com.csci927.pandemicaservice2;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

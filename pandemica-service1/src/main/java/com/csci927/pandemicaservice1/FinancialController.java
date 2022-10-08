@@ -24,12 +24,13 @@ public class FinancialController {
     }
 
     @PostMapping("/apply")
-    public String applyForAssistance(@Valid FinancialModel financialModel, BindingResult result){
+    public String applyForAssistance(@Valid FinancialModel financialModel, BindingResult result, Model model){
         if (result.hasErrors()) {
+            model.addAttribute("financial", new FinancialModel());
             return "financial-assistance";
         }
         financialRepository.save(financialModel);
-        return "redirect:financial-done";
+        return "financial-done";
     }
 
 }

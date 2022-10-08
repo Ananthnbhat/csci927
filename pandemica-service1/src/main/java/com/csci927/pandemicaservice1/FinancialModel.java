@@ -11,7 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -34,11 +33,11 @@ public class FinancialModel {
 
     @NotBlank(message = "Address is mandatory")
     @Column(name = "address")
-    private long address;
+    private String address;
 
     @NotBlank(message = "Date of birth is mandatory")
     @Column(name = "dob")
-    private LocalDate dob;
+    private String dob;
 
     @NotBlank(message = "Reason is mandatory")
     @Column(name = "reason")

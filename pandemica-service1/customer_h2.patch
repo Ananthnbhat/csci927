@@ -1,0 +1,236 @@
+Index: pandemica-service1/src/main/resources/application.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/pandemica-service1/src/main/resources/application.properties b/pandemica-service1/src/main/resources/application.properties
+--- a/pandemica-service1/src/main/resources/application.properties	(revision 3ad41026fd7bdb1538a37eb876c43ef2393e2139)
++++ b/pandemica-service1/src/main/resources/application.properties	(date 1665103216996)
+@@ -1,1 +1,6 @@
+-
++spring.datasource.url=jdbc:h2:file:./data/demo
++spring.datasource.driverClassName=org.h2.Driver
++spring.datasource.username=sa
++spring.datasource.password=password
++spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
++spring.h2.console.enabled=true
+\ No newline at end of file
+Index: pandemica-service1/src/main/java/com/csci927/pandemicaservice1/ICustomerRepo.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/pandemica-service1/src/main/java/com/csci927/pandemicaservice1/ICustomerRepo.java b/pandemica-service1/src/main/java/com/csci927/pandemicaservice1/ICustomerRepo.java
+new file mode 100644
+--- /dev/null	(date 1665102345771)
++++ b/pandemica-service1/src/main/java/com/csci927/pandemicaservice1/ICustomerRepo.java	(date 1665102345771)
+@@ -0,0 +1,10 @@
++package com.csci927.pandemicaservice1;
++
++import org.springframework.data.jpa.repository.JpaRepository;
++import org.springframework.stereotype.Repository;
++
++
++@Repository
++public interface ICustomerRepo extends JpaRepository<CustomerModel, Long> {
++
++}
+Index: pandemica-service1/src/main/java/com/csci927/pandemicaservice1/CustomerController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/pandemica-service1/src/main/java/com/csci927/pandemicaservice1/CustomerController.java b/pandemica-service1/src/main/java/com/csci927/pandemicaservice1/CustomerController.java
+new file mode 100644
+--- /dev/null	(date 1665106239450)
++++ b/pandemica-service1/src/main/java/com/csci927/pandemicaservice1/CustomerController.java	(date 1665106239450)
+@@ -0,0 +1,86 @@
++package com.csci927.pandemicaservice1;
++
++import java.util.List;
++import java.util.Optional;
++
++import org.slf4j.Logger;
++import org.slf4j.LoggerFactory;
++import org.springframework.beans.factory.annotation.Autowired;
++import org.springframework.http.HttpStatus;
++import org.springframework.http.ResponseEntity;
++import org.springframework.web.bind.annotation.DeleteMapping;
++import org.springframework.web.bind.annotation.GetMapping;
++import org.springframework.web.bind.annotation.PathVariable;
++import org.springframework.web.bind.annotation.PostMapping;
++import org.springframework.web.bind.annotation.RequestBody;
++import org.springframework.web.bind.annotation.PutMapping;
++import org.springframework.web.bind.annotation.RequestMapping;
++import org.springframework.web.bind.annotation.RestController;
++
++
++@RestController
++@RequestMapping("/api")
++public class CustomerController {
++
++    private static final Logger log = LoggerFactory.getLogger(CustomerController.class);
++
++    @Autowired
++    ICustomerRepo customerRepo;
++
++    @GetMapping("/customers")
++    public ResponseEntity<List<CustomerModel>> getAllCustomers() {
++        try {
++            List<CustomerModel> list = customerRepo.findAll();
++
++            if (list.isEmpty() || list.size() == 0) {
++                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
++            }
++
++            return new ResponseEntity<>(list, HttpStatus.OK);
++        } catch (Exception e) {
++            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
++        }
++    }
++
++    @GetMapping("/customers/{id}")
++    public ResponseEntity<CustomerModel> getCustomer(@PathVariable Long id) {
++        Optional<CustomerModel> customer = customerRepo.findById(id);
++
++        if (customer.isPresent()) {
++            return new ResponseEntity<>(customer.get(), HttpStatus.OK);
++        }
++        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
++    }
++
++    @PostMapping("/customers")
++    public CustomerModel saveCustomer(@RequestBody CustomerModel customer) {
++//        try {
++//            return new ResponseEntity<>(customerRepo.save(customer), HttpStatus.CREATED);
++//        } catch (Exception e) {
++//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
++//        }
++        return customerRepo.save(customer);
++    }
++
++    @PutMapping("/customers")
++    public ResponseEntity<CustomerModel> updateCustomer(@RequestBody CustomerModel customer) {
++        try {
++            return new ResponseEntity<>(customerRepo.save(customer), HttpStatus.OK);
++        } catch (Exception e) {
++            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
++        }
++    }
++
++    @DeleteMapping("/customers/{id}")
++    public ResponseEntity<HttpStatus> deleteCustomer(@PathVariable Long id) {
++        try {
++            Optional<CustomerModel> customer = customerRepo.findById(id);
++            if (customer.isPresent()) {
++                customerRepo.delete(customer.get());
++            }
++            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
++        } catch (Exception e) {
++            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
++        }
++    }
++}
+Index: pandemica-service1/pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/pandemica-service1/pom.xml b/pandemica-service1/pom.xml
+--- a/pandemica-service1/pom.xml	(revision 3ad41026fd7bdb1538a37eb876c43ef2393e2139)
++++ b/pandemica-service1/pom.xml	(date 1665104597619)
+@@ -31,6 +31,25 @@
+ 			<artifactId>spring-boot-starter-test</artifactId>
+ 			<scope>test</scope>
+ 		</dependency>
++		<dependency>
++			<groupId>org.springframework.boot</groupId>
++			<artifactId>spring-boot-starter-data-jpa</artifactId>
++		</dependency>
++		<dependency>
++			<groupId>com.h2database</groupId>
++			<artifactId>h2</artifactId>
++			<scope>runtime</scope>
++		</dependency>
++		<dependency>
++			<groupId>org.projectlombok</groupId>
++			<artifactId>lombok</artifactId>
++			<optional>true</optional>
++		</dependency>
++		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools -->
++		<dependency>
++			<groupId>org.springframework.boot</groupId>
++			<artifactId>spring-boot-devtools</artifactId>
++		</dependency>
+ 	</dependencies>
+ 
+ 	<build>
+@@ -38,6 +57,14 @@
+ 			<plugin>
+ 				<groupId>org.springframework.boot</groupId>
+ 				<artifactId>spring-boot-maven-plugin</artifactId>
++				<configuration>
++					<excludes>
++						<exclude>
++							<groupId>org.projectlombok</groupId>
++							<artifactId>lombok</artifactId>
++						</exclude>
++					</excludes>
++				</configuration>
+ 			</plugin>
+ 		</plugins>
+ 	</build>
+Index: pandemica-service1/src/main/java/com/csci927/pandemicaservice1/CustomerModel.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/pandemica-service1/src/main/java/com/csci927/pandemicaservice1/CustomerModel.java b/pandemica-service1/src/main/java/com/csci927/pandemicaservice1/CustomerModel.java
+new file mode 100644
+--- /dev/null	(date 1665102199091)
++++ b/pandemica-service1/src/main/java/com/csci927/pandemicaservice1/CustomerModel.java	(date 1665102199091)
+@@ -0,0 +1,44 @@
++package com.csci927.pandemicaservice1;
++
++import java.util.Date;
++
++import javax.persistence.Column;
++import javax.persistence.Entity;
++import javax.persistence.GeneratedValue;
++import javax.persistence.GenerationType;
++import javax.persistence.Id;
++import javax.persistence.Table;
++
++import org.hibernate.annotations.CreationTimestamp;
++import org.hibernate.annotations.UpdateTimestamp;
++
++import lombok.Getter;
++import lombok.Setter;
++import lombok.ToString;
++
++@Entity
++@Table(name="tbl_customer")
++@Setter
++@Getter
++@ToString
++public class CustomerModel {
++
++    @Id
++    @GeneratedValue(strategy=GenerationType.IDENTITY)
++    private Long id;
++
++    private String name;
++
++    private Long age;
++
++    private String location;
++
++    @CreationTimestamp
++    @Column(name="created_at", nullable=false, updatable=false)
++    private Date createdAt;
++
++    @UpdateTimestamp
++    @Column(name="updated_at")
++    private Date updatedAt;
++
++}

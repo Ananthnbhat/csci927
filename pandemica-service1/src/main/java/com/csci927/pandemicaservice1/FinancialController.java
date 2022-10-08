@@ -17,7 +17,7 @@ public class FinancialController {
     @Autowired
     FinancialRepository financialRepository;
 
-    @GetMapping("/")
+    @GetMapping
     public String renderFinancialAssistancePage(Model model){
         model.addAttribute("financial", new FinancialModel());
         return "financial-assistance";

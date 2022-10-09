@@ -15,6 +15,6 @@
 ## How to run the microservices with docker:
 
 1. Start docker
-2. In the terminal/cmd, go into *each* of the microservices and execute following commands:
+2. In the terminal/cmd, go into *each* of the microservices (or one of the microservice that you want to run) and execute following commands:
     * `mvn clean package`
     * `docker-compose up` 

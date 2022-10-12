@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>QR Code Generation</title>
+    <style>
+body {
+  font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Add padding to containers */
+.container {
+  padding: 16px;
+  background-color: white;
+}
+
+/* Full-width input fields */
+input[type=text] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+  border-radius: 5px;
+}
+input[type=date]
+{
+padding: 15px;
+  margin: 5px 5px 22px ;
+  display: inline-block;
+  background: #f1f1f1;
+  border-radius: 5px;
+  border: 1px solid #cecece;
+}
+
+
+
+input[type=text]:focus, input[type=password]:focus {
+  background-color: #f1f1f1;
+  outline: none;
+}
+textarea {
+  /* Align multiline text fields with their labels */
+  vertical-align: top;
+  width: 100%;
+  /* Provide space to type some text */
+  height: 5em;
+  border-radius: 5px;
+}
+/* Overwrite default styles of hr */
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* Set a style for the submit button */
+.registerbtn {
+  background-color: #1f1b19;
+  color: white;
+  padding: 16px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  opacity: 0.9;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  width: 100%
+}
+
+.registerbtn:hover {
+  opacity: 1;
+}
+.btn-wrapper {
+display: "flex";
+
+}
+.home-btn {
+  border: none;
+  padding: 12px 24px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 10px auto 0 20px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+.button5 {
+  background-color: white;
+  color: black;
+  border: 2px solid #555;
+  border-radius: 4px;
+}
+.button5:hover {
+  background-color: #555555;
+  color: white;
+}
+    </style>
+</head>
+<body>
+<div class="container">
+    <a class="home-a" href="/"><button class="home-btn button5">Home</button></a>
+    <form action="#" th:action="@{/qrcode/generated}" th:object="${qrcode}" method="post">
+        <h1>Pandemica QR code generator</h1>
+        <p>Please fill in this form to generate.</p>
+        <hr>
+        <label for="name"><b>Name of the premise</b></label>
+        <input type="text" th:field="*{name}" placeholder="Enter Name" name="name" id="name" required>
+
+        <label for="email"><b>Email</b></label>
+        <input type="text" th:field="*{email}" placeholder="Enter Email" name="email" id="email" required>
+
+        <label for="address"><b>Address</b></label>
+        <input type="text" th:field="*{address}" placeholder="Enter Address" name="address" id="address" required>
+
+        <hr>
+        <p>By submitting, you agree to our <a href="#">Terms & Privacy</a>.</p>
+        <div class="btn-wrapper">
+            <button type="submit" value="Submit" id="qr-btn" class="registerbtn" >Submit</button>
+        </div>
+
+
+    </form>
+    <span id="loading"></span>
+    <img src="" alt="" id="qr-img" />
+</div>
+<script>
+
+ var qr_btn = document.querySelector("#qr-btn")
+var qr_img = document.querySelector("#qr-img")
+var loading = document.querySelector("#loading")
+
+qr_btn.addEventListener("click", () => {
+    // loading
+    loading.style.display = "block"
+    qr_img.onload = function() {
+        loading.style.display = "none"
+    }
+
+    // generate image
+    var name = document.querySelector("#name").value
+    var email = document.querySelector("#email").value
+    var address = document.querySelector("#affress").value
+    var combined = name + email + address
+    var url = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${combined}`
+    qr_img.src = url
+})
+
+</script>
+</body>
+</html>

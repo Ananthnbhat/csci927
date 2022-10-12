@@ -1,11 +1,92 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Getting Started: Serving Web Content</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</head>
+    <title>Pandemica Service</title>
+    <meta charset="UTF-8">
+    <style>
+  .banner {
+      /* The image used */
+      }
+  .heading {
+    font-family: courier;
+    font-size: 300%;
+    height: 200px;
+    padding-top: 102px;
+    text-align: center;
+  }
+
+  .subhead {
+    font-family: courier;
+    font-size: 150%;
+    height: 100px;
+    text-align: center;
+  }
+
+
+  ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+li {
+  float: left;
+  margin: 4px;
+  background-color: #333;
+  border-radius: 4px;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+
+  border-right: 1px solid #bbb;
+}
+
+li a:hover {
+  background-color: rgb(232, 70, 21);
+}
+
+.table {
+	display: table;   /* Allow the centering to work */
+	margin: 0 auto;
+}
+ul#horizontal-list {
+	min-width: 596px;
+	list-style: none;
+	}
+body {
+margin: 0;
+background-image: url(https://images.unsplash.com/photo-1554034483-04fda0d3507b?ixlib=rb-1.2.1&dl=adrian-infernus-GLf7bAwCdYg-unsplash.jpg&q=80&fm=jpg&crop=entropy&cs=tinysrgb);
+background-size:cover;
+}
+
+
+
+    </style>
+
 <body>
-<h1>This is the home page</h1>
-<p>Greeting page <a href="/greeting">here</a></p>
+
+<div class="banner">
+    <div>
+        <h1 class="heading">Pandemica Service Provider</h1>
+
+        <h2 class="subhead">Please Click On The Needful Services Below</h2>
+
+    </div>
+
+    <div class="table">
+        <ul id="horizontal-list">
+            <li><a href="/financial-assistance">FINANCIAL ASSISTANCE</a></li>
+            <li><a href="#qr">QR-CODE GENERATOR</a></li>
+            <li><a href="#feedback">VACCINE FEEDBACK</a></li>
+
+        </ul>
+    </div>
+</div>
 </body>
+
 </html>

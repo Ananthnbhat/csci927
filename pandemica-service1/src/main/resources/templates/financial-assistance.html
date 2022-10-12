@@ -9,7 +9,6 @@
     <style>
 body {
   font-family: Arial, Helvetica, sans-serif;
-  background-color: black;
   margin: 0;
 }
 
@@ -84,14 +83,33 @@ hr {
 display: "flex";
 
 }
-
-
-
+.home-btn {
+  border: none;
+  padding: 12px 24px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 10px auto 0 20px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+.button5 {
+  background-color: white;
+  color: black;
+  border: 2px solid #555;
+  border-radius: 4px;
+}
+.button5:hover {
+  background-color: #555555;
+  color: white;
+}
 
     </style>
 </head>
 <body>
 
+<a class="home-a" href="/"><button class="home-btn button5">Home</button></a>
 <form action="#" th:action="@{/financial-assistance/apply}" th:object="${financial}" method="post">
     <div class="container">
         <h1>Pandemic Financial Assistance - Register</h1>

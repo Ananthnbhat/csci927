@@ -112,14 +112,14 @@ display: "flex";
 <a class="home-a" href="/"><button class="home-btn button5">Home</button></a>
 <form action="#" th:action="@{/financial-assistance/apply}" th:object="${financial}" method="post">
     <div class="container">
-        <h1>Pandemic Financial Assistance - Register</h1>
+        <h1>Pandemica Financial Assistance Form</h1>
         <p>Please fill in this form to apply.</p>
         <hr>
         <label for="name"><b>Name</b></label>
         <input type="text" th:field="*{name}" placeholder="Enter Name" name="name" id="name" required>
 
         <label for="email"><b>Email</b></label>
-        <input type="text" th:field="*{email}" placeholder="Enter Email" name="email" id="email" required>
+        <input type="email" th:field="*{email}" placeholder="Enter Email" name="email" id="email" required>
 
         <label for="address"><b>Address</b></label>
         <input type="text" th:field="*{address}" placeholder="Enter Address" name="address" id="address" required>
@@ -133,7 +133,7 @@ display: "flex";
         <p>By submitting, you agree to our <a href="#">Terms & Privacy</a>.</p>
 
         <div class="btn-wrapper">
-            <input type="submit" value="Submit" class="registerbtn"/>
+            <input type="submit" value="Apply" class="registerbtn"/>
 <!--            <input type="reset" value="Reset" class="registerbtn"/>-->
         </div>
     </div>

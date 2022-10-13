@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Add padding to containers */
+.container {
+  padding: 16px;
+  background-color: white;
+}
+
+/* Full-width input fields */
+input[type=text], input[type=email] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+  border-radius: 5px;
+}
+select {
+   background: #f1f1f1;
+padding: 10px;
+border-radius: 5px;
+border: 1px solid #cecece;
+margin-left: 0px;
+margin-top: 10px;
+}
+input[type=date]
+{
+padding: 15px;
+  margin: 10px 0px 10px ;
+  display: inline-block;
+  background: #f1f1f1;
+  border-radius: 5px;
+  border: 1px solid #cecece;
+}
+
+input[type=text]:focus, input[type=email]:focus {
+  background-color: #f1f1f1;
+  outline: none;
+}
+textarea {
+  /* Align multiline text fields with their labels */
+  vertical-align: top;
+  width: 100%;
+  /* Provide space to type some text */
+  height: 5em;
+  border-radius: 5px;
+}
+/* Overwrite default styles of hr */
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* Set a style for the submit button */
+.registerbtn {
+  background-color: #1f1b19;
+  color: white;
+  padding: 16px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  opacity: 0.9;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  width: 100%
+}
+
+.registerbtn:hover {
+  opacity: 1;
+}
+.btn-wrapper {
+display: "flex";
+
+}
+.home-btn {
+  border: none;
+  padding: 12px 24px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 10px auto 0 20px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+.button5 {
+  background-color: white;
+  color: black;
+  border: 2px solid #555;
+  border-radius: 4px;
+}
+.button5:hover {
+  background-color: #555555;
+  color: white;
+}
+p{
+margin-bottom:28px;
+}
+    </style>
+</head>
+<body>
+<a class="home-a" href="http://localhost:8080">
+    <button class="home-btn button5">Home</button>
+</a>
+<form th:action="@{/vaccine-feedback/submit}" method="post">
+    <div class="container">
+        <h1>Pandemica Vaccine Feedback Form</h1>
+        <p>Please fill in the vaccine feedback form.</p>
+        <hr>
+        <label for="nm"><b>Name</b>&nbsp;</label>
+        <input type="text" placeholder="Enter Name" name="nm" id="nm" required>
+
+        <label for="email"><b>Email</b>&nbsp;</label>
+        <input type="email" placeholder="Enter Email" name="email" id="email" required>
+
+        <label for="birthday"><b>Date-Of-Birth</b>&nbsp;</label><br>
+        <input type="date" id="birthday" name="birthday" required>
+
+        <p><b>Gender</b>&nbsp;
+            <label for="gender"></label><br>
+            <select name="gender" id="gender">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="others">Others</option>
+            </select>
+        </p>
+
+        <p><b>Vaccination Status</b>&nbsp;
+            <label for="status"></label><br>
+            <select name="status" id="status">
+                <option value="full_vaccinated">Fully Vaccinated</option>
+                <option value="half_vaccinated">Half Vaccinated</option>
+                <option value="not_vaccinated">Not Vaccinated</option>
+                <option value="unknown">Unknown</option>
+            </select>
+        </p>
+        <p><b>Vaccine Brand</b>&nbsp;
+            <label for="brand"></label><br>
+            <select name="brand" id="brand">
+                <option value="pfizer">Pfizer</option>
+                <option value="moderna">Moderna</option>
+                <option value="AstraZeneca">AstraZeneca</option>
+                <option value="others">others</option>
+            </select>
+        </p>
+        <br>
+        <label for="msg"><b>Feedback</b>&nbsp;</label>
+        <textarea id="msg" name="user_message"></textarea>
+        <hr>
+
+
+        <button type="submit" class="registerbtn">Submit</button>
+    </div>
+
+
+</form>
+
+</body>
+</html>
